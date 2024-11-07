@@ -11,11 +11,11 @@ app.use(express.static(path.join(__dirname)));
 
 // Configuración de conexión a MySQL
 const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    port: process.env.DB_PORT || 3306  // Asegúrate de que el puerto sea correcto
+    host: 'bbnnti4wyhacm6cvj05f-mysql.services.clever-cloud.com',
+    user: 'ur1hp8tkqj43h4py', // Cambia esto por el usuario correcto
+    password: 'QbunSgYVZw6YUXikv6qy', // Cambia esto por la contraseña correcta
+    database: 'bbnnti4wyhacm6cvj05f',
+    port: '3306'
 });
 
 // Conectar a la base de datos
