@@ -11,10 +11,11 @@ app.use(express.static(path.join(__dirname)));
 
 // Configuración de conexión a MySQL
 const db = mysql.createConnection({
-    host: process.env.DB_HOST || 'localhost',
-    user: process.env.DB_USER || 'root', // Cambia esto por el usuario correcto
-    password: process.env.DB_PASSWORD || '', // Cambia esto por la contraseña correcta
-    database: process.env.DB_NAME || 'huerta'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT || 3306  // Asegúrate de que el puerto sea correcto
 });
 
 // Conectar a la base de datos
