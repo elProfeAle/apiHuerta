@@ -62,6 +62,7 @@ app.get('/api/ultimaTemperatura', (req, res) => {
     });
 });
 
+
 app.get('/temperaturas', (req, res) => {
     const query = 'SELECT * FROM plantas'; // Obtener las últimas 5 lecturas
     db.query(query, (err, results) => {
@@ -69,6 +70,8 @@ app.get('/temperaturas', (req, res) => {
       res.json(results);  // Enviar los datos en formato JSON
     });
 });
+
+//Obtener la ultima medicion
 app.get('/api/ultimaMedicion', (req, res) => {
     const query = 'SELECT fecha, temperatura, humedad FROM plantas ORDER BY id DESC LIMIT 1'; // Obtener las últimas 5 lecturas
     db.query(query, (err, results) => {
