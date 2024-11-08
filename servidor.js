@@ -44,7 +44,7 @@ app.get('/api/insertarPlanta', (req, res) => {
     });
 });
 // Ruta para obtener el último dato de temperatura
-app.get('/ultimaTemperatura', (req, res) => {
+app.get('/api/ultimaTemperatura', (req, res) => {
     const sql = 'SELECT Temperatura FROM plantas ORDER BY id DESC LIMIT 1';
 
     db.query(sql, (err, result) => {
