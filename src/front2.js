@@ -11,3 +11,4 @@ setInterval(() => {
         })
         .catch(error => console.error('Error al obtener la última temperatura:', error));
 }, 1000);
+
