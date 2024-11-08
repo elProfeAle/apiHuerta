@@ -30,11 +30,11 @@ app.use(cors());
 
 // Nueva ruta para insertar datos en la tabla "plantas" desde la URL
 app.get('/api/insertarPlanta', (req, res) => {
-    const { NombrePlanta, Temperatura, Humedad } = req.query;
+    const { fecha, temperatura, humedad } = req.query;
 
     // Consulta SQL para insertar los datos en la tabla plantas
-    const sql = `INSERT INTO plantas (NombrePlanta, Temperatura, Humedad) VALUES (?, ?, ?)`;
-    db.query(sql, [NombrePlanta, parseInt(Temperatura), parseInt(Humedad)], (err, result) => {
+    const sql = `INSERT INTO plantas (fecha, temperatura, humedad) VALUES (?, ?, ?)`;
+    db.query(sql, [fecha, parseInt(temperatura), parseInt(humedad)], (err, result) => {
         if (err) {
             console.error(err);
             res.status(500).send('Error al insertar los datos');
