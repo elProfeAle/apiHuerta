@@ -10,5 +10,13 @@ setInterval(() => {
             titulo.textContent = data + '°';
         })
         .catch(error => console.error('Error al obtener la última temperatura:', error));
+
+    fetch('https://huerta-api.onrender.com/api/ultimaMedicion')
+        .then(response => response.text())
+        .then(data => {
+            // Actualizar el contenido de temp con la última temperatura de la base de datos
+            console.log(data.fecha + ': temperatura= '+data.temperatura + '° humedad= ' + data.humedad + '%')
+        })
+        .catch(error => console.error('Error al obtener la última temperatura:', error));
 }, 1000);
 

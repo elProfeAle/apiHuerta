@@ -69,6 +69,13 @@ app.get('/temperaturas', (req, res) => {
       res.json(results);  // Enviar los datos en formato JSON
     });
 });
+app.get('/api/ultimaMedicion', (req, res) => {
+    const query = 'SELECT fecha, temperatura, humedad FROM plantas ORDER BY id DESC LIMIT 1'; // Obtener las últimas 5 lecturas
+    db.query(query, (err, results) => {
+        if (err) throw err;
+      res.json(results);  // Enviar los datos en formato JSON
+    });
+});
 
 // Iniciar el servidor en el puerto 3000
 
