@@ -3,7 +3,7 @@ let titulo = document.querySelector('#tituloTemp')
 
 setInterval(() => {
     //Colocamos la URL de la API a consumir, en este caso ultima temperatura
-    fetch('https://huerta-api.onrender.com//ultimaTemperatura')
+    fetch('https://huerta-api.onrender.com/ultimaTemperatura')
         .then(response => response.text())
         .then(data => {
             // Actualizar el contenido de temp con la última temperatura de la base de datos
