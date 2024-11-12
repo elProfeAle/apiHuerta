@@ -15,7 +15,11 @@ setInterval(() => {
             // Actualizar el contenido de temp con la última temperatura de la base de datos
             titulo.textContent = data + '°';
             if(data>30){
-                
+                titulo.textContent = titulo.textContent + '☀️'
+            }else if(data>10){
+                titulo.textContent = titulo.textContent + '🌡️';
+            }else{
+                titulo.textContent = titulo.textContent + '❄️';
             }
         })
         .catch(error => console.error('Error al obtener la última temperatura:', error));
@@ -67,7 +71,7 @@ function showExample(number) {
             .catch(error => console.error('Error al mostrar el promedio semanal: ', error));
     } else {
         tituloEjemplo.textContent = '¿Cómo mostrar la temperatura?'
-        info.innerHTML = 'Con este enlace:  <a target="_blank" href="https://huerta-api.onrender.com/api/ultimaTemperatura">https://huerta-api.onrender.com/api/ultimaTemperatura</a>, podemos obtener la última temperatura registrada 🌡️.'
+        info.innerHTML = 'Con este enlace:  <a target="_blank" href="https://huerta-api.onrender.com/api/ultimaTemperatura">https://huerta-api.onrender.com/api/ultimaTemperatura</a>, podemos obtener la última temperatura registrada 🌡️. <b>Hace click para ver los ejemplos ⬇️⬇️⬇️</b>'
 
         //fetch nos permite tomar datos de una api, en este caso huerta-api
         fetch('https://huerta-api.onrender.com/api/ultimaTemperatura')

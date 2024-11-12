@@ -29,8 +29,51 @@
                 <h2 class="fw-semibold">¿Que es <span class="fst-italic">{huerta-API}?</span> </h2>
                 <p>
                     Es una API en la cual podrás cargar los datos de tu huerta a una Base de Datos y poder realizar diferentes
-                    tipos de consultas en todo momento. Esta web tiene es una guía sencilla para que puedas implementar <b>{huerta-api}</b>🌱 en tu proyecto.
+                    tipos de consultas en todo momento. Esta web contiene una guía sencilla para que puedas implementar <b>{huerta-api}</b>🌱 en tu proyecto. 
                 </p>
+                <p>
+                    Para entender un poco el funcionamiento básico de la API, vamos a ver la estructura básica de la base de datos. Esta fue diseñada en base a las necesidades de ambos proyectos involucrados: 
+                </p>
+                <div class="table-responsive">
+                <table class="table table-sm table-striped">
+                    <thead>
+                      <tr>
+                        <th scope="col">id</th>
+                        <th scope="col">numHuerta</th>
+                        <th scope="col">fecha</th>
+                        <th scope="col">hora</th>
+                        <th scope="col">temperatura</th>
+                        <th scope="col">humedad</th>
+                      </tr>
+                    </thead>
+                    <tbody class="table-group-divider">
+                      <tr>
+                        <th scope="row">1</th>
+                        <td>1</td>
+                        <td>2024-11-08</td>
+                        <td>12:28:02</td>
+                        <td>20</td>
+                        <td>12</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">2</th>
+                        <td>2</td>
+                        <td>2024-11-09</td>
+                        <td>03:48:16</td>
+                        <td>18</td>
+                        <td>30</td>
+                      </tr>
+                      <tr>
+                        <th scope="row">3</th>
+                        <td>2</td>
+                        <td>2024-11-10</td>
+                        <td>18:28:02</td>
+                        <td>32</td>
+                        <td>40</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
             </div>
 
         </div>
@@ -54,10 +97,10 @@
         </div>
         <div class="hero rounded border shadow p-4 my-2">
             <div class="row">
-                <h2 id="tituloEjemplo" class="fw-semibold">¿Cómo tomar y utilizar un solo valor?</h2>
+                <h2 id="tituloEjemplo" class="fw-semibold">¿Cómo mostrar la temperatura?</h2>
                 <p id="info">
-                    Es una API en la cual podrás cargar los datos de tu huerta a una Base de Datos, realizar
-                    diferentes tipos de consultas en todo momento.
+                    Con este enlace:  <a target="_blank" href="https://huerta-api.onrender.com/api/ultimaTemperatura">https://huerta-api.onrender.com/api/ultimaTemperatura</a>, podemos obtener la última temperatura registrada 🌡️. 
+                    <b>Hace click para ver los ejemplos ⬇️⬇️⬇️</b>
                 </p>
                 <div>
                     <button class="btn btn-outline-primary me-2" onclick="showExample(1)">Última temperatura</button>
