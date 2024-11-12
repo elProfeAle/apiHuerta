@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>huertAPI</title>
     <link rel="stylesheet" href="src/style.css">
+    <link rel="stylesheet" href="assets/css/prism.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -38,23 +39,101 @@
         <div class="hero rounded border shadow p-4 my-4 ">
             <div class="row">
                 <div class="col-8">
-                    <h2 class="fw-semibold">¿Cómo tomar y utilizar un solo valor?</span> </h2>
+                    <h2 class="fw-semibold">¿Está funcionando la API?</span> </h2>
                     <p class="lead">
-                        Es una API en la cual podrás cargar los datos de tu huerta a una Base de Datos, realizar
-                        diferentes
-                        tipos de consultas en todo momento.
+                        En este apartado podrás ver si esta funcionando actualmente {huerta-api}, ya que podrás ver a la
+                        derecha el valor actual de la temperatura. Si se muestra un valor que no es numérico, entonces
+                        no está funcionando correctamente.
                     </p>
                 </div>
                 <div class="col-4">
-                    <h2 class="fw-semibold">Ejemplo</span> </h2>
-                    <h2 id="tituloTemp" class="display-2">0°</h1>
+                    <h2 class="fw-semibold">Último valor almacenado</span> </h2>
+                    <h2 id="tituloTemp" class="display-2">x°</h1>
                 </div>
             </div>
+
+
+        </div>
+        <div class="hero rounded border shadow p-4 my-2">
+            <div class="row">
+                <h2 id="tituloEjemplo" class="fw-semibold">¿Cómo tomar y utilizar un solo valor?</h2>
+                <p class="lead">
+                    Es una API en la cual podrás cargar los datos de tu huerta a una Base de Datos, realizar
+                    diferentes tipos de consultas en todo momento.
+                </p>
+                <div>
+                    <button class="btn btn-outline-primary me-2" onclick="showExample(1)">Ej 1</button>
+                    <button class="btn btn-outline-primary me-2" onclick="showExample(2)">Ej 2</button>
+                    <button class="btn btn-outline-primary me-2" onclick="showExample(3)">Ej 3</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8">
+
+                    <div id="example1" class="code-container mt-4">
+                        <pre><code class="language-javascript"> 
+        //fetch nos permite tomar datos de una api, en este caso huerta-api
+        fetch('https://huerta-api.onrender.com/api/ultimaTemperatura')
+        //El valor solicitado en este caso es un texto
+        .then(response => response.text())
+        //y lo almacenamos en data
+        .then(data => {
+            // Actualizar el contenido de temp con la última temperatura de la base de datos
+            datosAMostrar.textContent = data + '°';
+        })
+        .catch(error => console.error('Error al obtener la última temperatura:', error));
+                    </code></pre>
+                        <!--<button class="btn btn-success" onclick="runCode('console.log(\'Hola Mundo\')')">Ejecutar</button>-->
+                    </div>
+
+                    <div id="example2" class="code-container mt-4">
+                        <pre><code class="language-javascript">
+        fetch('https://huerta-api.onrender.com/api/ultimaMedicion')
+        .then(response => response.json())
+        .then(data => {
+            //Convertimos la fecha en formato fecha para JS
+            let fecha = new Date(data[0].fecha)
+            //El metodo .toLocaleDateString() sirve para mostrar solo el dia, mes y año
+            datosAMostrar.textContent = fecha.toLocaleDateString() + ': temperatura= '+data[0].temperatura + '° humedad= ' + data[0].humedad + '%'
+        })
+                .catch(error => console.error('Error al obtener la última medición:', error));
+                        </code></pre>
+                        <!-- <button class="btn btn-success" onclick="runCode('document.getElementById(\'tituloTemp\').innerText = \'40°\';')">Ejecutar</button>-->
+                    </div>
+                    <div id="example3" class="code-container mt-4">
+                        <pre><code class="language-javascript"> 
+        fetch('http://localhost:3000/promediosemanal')
+        .then(response => response.json())
+        //Recibimos la respuesta de la API de tipo jSON y la guardamos en data
+        .then(data => {
+            //Creamos una variable para mostrar correctamente la fecha
+            let fecha         
+            /*
+                Utilizamos foreach para recorrer la variable data, ahora utilizaremos
+                item para acceder a las diferentes partes del mismo. 
+                Ej: para la fecha seria item.fecha
+            */
+            data.forEach(item => {
+                fecha = new Date(item.fecha)
+                //El metodo .toLocaleDateString() sirve para mostrar solo el dia, mes y año   
+                datosAMostrar.innerHTML = datosAMostrar.innerHTML + fecha.toLocaleDateString() + ': temperatura= '+item.promedio_temperatura + 'º' + '<br>'
+            });
+        })</code></pre>
+                        <!--  <button class="btn btn-success" onclick="runCode('let nombre = \'pepe\'; ')">Ejecutar</button>-->
+                    </div>
+                </div>
+                <div class="col-4">
+                    <h2 class="fw-semibold">Ejemplo</h2>
+                    <p id="datos" class="lead">0°</p>
+                </div>
+            </div>
+
 
         </div>
         <!--Fin container-->
     </div>
 </body>
 <script src="src/front2.js"></script>
+<script src="assets/js/prism.js"></script>
 
 </html>

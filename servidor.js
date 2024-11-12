@@ -30,11 +30,15 @@ app.use(cors());
 
 // Nueva ruta para insertar datos en la tabla "plantas" desde la URL
 app.get('/api/insertarPlanta', (req, res) => {
-    const { fecha, temperatura, humedad } = req.query;
+    const { numHuerta, temperatura, humedad } = req.query;
+
+    // Generar fecha y hora actuales en el servidor
+    const fecha = new Date().toISOString().split('T')[0]; // Obtiene la fecha en formato YYYY-MM-DD
+    const hora = new Date().toTimeString().split(' ')[0]; // Obtiene la hora en formato HH:MM:SS
 
     // Consulta SQL para insertar los datos en la tabla plantas
-    const sql = `INSERT INTO plantas (fecha, temperatura, humedad) VALUES (?, ?, ?)`;
-    db.query(sql, [fecha, parseInt(temperatura), parseInt(humedad)], (err, result) => {
+    const sql = `INSERT INTO huerta (numHuerta, fecha, hora, temperatura, humedad) VALUES (?, ?, ?, ?, ?)`;
+    db.query(sql, [numHuerta, fecha, hora, parseFloat(temperatura), parseFloat(humedad)], (err, result) => {
         if (err) {
             console.error(err);
             res.status(500).send('Error al insertar los datos');
@@ -43,9 +47,10 @@ app.get('/api/insertarPlanta', (req, res) => {
         }
     });
 });
+
 // Ruta para obtener el último dato de temperatura
 app.get('/api/ultimaTemperatura', (req, res) => {
-    const sql = 'SELECT Temperatura FROM plantas ORDER BY id DESC LIMIT 1';
+    const sql = 'SELECT Temperatura FROM huerta ORDER BY id DESC LIMIT 1';
 
     db.query(sql, (err, result) => {
         if (err) {
@@ -63,20 +68,28 @@ app.get('/api/ultimaTemperatura', (req, res) => {
 });
 
 
-app.get('/temperaturas', (req, res) => {
-    const query = 'SELECT * FROM plantas'; // Obtener las últimas 5 lecturas
+app.get('/api/promedioSemanal', (req, res) => {
+    const query = 'SELECT fecha, AVG(temperatura) AS promedio_temperatura FROM huerta WHERE fecha >= CURDATE() - INTERVAL 7 DAY GROUP BY fecha ORDER BY fecha; '; 
+    
     db.query(query, (err, results) => {
         if (err) throw err;
-      res.json(results);  // Enviar los datos en formato JSON
+        res.json(results);  // Enviar los datos en formato JSON
+    });
+});
+app.get('/api/temperaturas', (req, res) => {
+    const query = 'SELECT * FROM huerta ORDER BY id LIMIT 5'; // Obtener las últimas 5 lecturas
+    db.query(query, (err, results) => {
+        if (err) throw err;
+        res.json(results);  // Enviar los datos en formato JSON
     });
 });
 
 //Obtener la ultima medicion
 app.get('/api/ultimaMedicion', (req, res) => {
-    const query = 'SELECT fecha, temperatura, humedad FROM plantas ORDER BY id DESC LIMIT 1'; // Obtener las últimas 5 lecturas
+    const query = 'SELECT fecha, temperatura, humedad FROM huerta ORDER BY id DESC LIMIT 1'; // Obtener las últimas 5 lecturas
     db.query(query, (err, results) => {
         if (err) throw err;
-      res.json(results);  // Enviar los datos en formato JSON
+        res.json(results);  // Enviar los datos en formato JSON
     });
 });
 
@@ -85,8 +98,3 @@ app.get('/api/ultimaMedicion', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
-
-/*
-app.listen(PORT, '0.0.0.0', () => {
-    console.log(`Servidor corriendo en http://0.0.0.0:${PORT}`);
-});*/
