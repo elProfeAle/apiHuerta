@@ -14,6 +14,9 @@ setInterval(() => {
         .then(data => {
             // Actualizar el contenido de temp con la última temperatura de la base de datos
             titulo.textContent = data + '°';
+            if(data>30){
+                
+            }
         })
         .catch(error => console.error('Error al obtener la última temperatura:', error));
 
