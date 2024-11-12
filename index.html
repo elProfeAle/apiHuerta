@@ -21,7 +21,7 @@
 
 <body>
     <div class="container-fluid sticky-top bg-success bg-gradient text-light d-flex justify-content-center">
-        <h1 class="display-1">{huerta-API}</h1>
+        <h1 class="display-1">{huerta-API}🌱</h1>
     </div>
     <div class="container">
         <div class="hero rounded border shadow p-4 my-4 ">
@@ -57,14 +57,14 @@
         <div class="hero rounded border shadow p-4 my-2">
             <div class="row">
                 <h2 id="tituloEjemplo" class="fw-semibold">¿Cómo tomar y utilizar un solo valor?</h2>
-                <p class="lead">
+                <p id="info" class="lead">
                     Es una API en la cual podrás cargar los datos de tu huerta a una Base de Datos, realizar
                     diferentes tipos de consultas en todo momento.
                 </p>
                 <div>
-                    <button class="btn btn-outline-primary me-2" onclick="showExample(1)">Ej 1</button>
-                    <button class="btn btn-outline-primary me-2" onclick="showExample(2)">Ej 2</button>
-                    <button class="btn btn-outline-primary me-2" onclick="showExample(3)">Ej 3</button>
+                    <button class="btn btn-outline-primary me-2" onclick="showExample(1)">Última temperatura</button>
+                    <button class="btn btn-outline-primary me-2" onclick="showExample(2)">Última medición</button>
+                    <button class="btn btn-outline-primary me-2" onclick="showExample(3)">Promedio semanal</button>
                 </div>
             </div>
             <div class="row">
@@ -72,53 +72,55 @@
 
                     <div id="example1" class="code-container mt-4">
                         <pre><code class="language-javascript"> 
-        //fetch nos permite tomar datos de una api, en este caso huerta-api
-        fetch('https://huerta-api.onrender.com/api/ultimaTemperatura')
-        //El valor solicitado en este caso es un texto
-        .then(response => response.text())
-        //y lo almacenamos en data
-        .then(data => {
-            // Actualizar el contenido de temp con la última temperatura de la base de datos
-            datosAMostrar.textContent = data + '°';
-        })
-        .catch(error => console.error('Error al obtener la última temperatura:', error));
+//fetch nos permite tomar datos de una api, en este caso huerta-api
+fetch('https://huerta-api.onrender.com/api/ultimaTemperatura')
+//El valor solicitado en este caso es un texto
+.then(response => response.text())
+//y lo almacenamos en data
+.then(data => {
+    // Actualizar el contenido de temp con la última temperatura de la base de datos
+    datosAMostrar.textContent = data + '°';
+})
+.catch(error => console.error('Error al obtener la última temperatura:', error));
                     </code></pre>
                         <!--<button class="btn btn-success" onclick="runCode('console.log(\'Hola Mundo\')')">Ejecutar</button>-->
                     </div>
 
                     <div id="example2" class="code-container mt-4">
                         <pre><code class="language-javascript">
-        fetch('https://huerta-api.onrender.com/api/ultimaMedicion')
-        .then(response => response.json())
-        .then(data => {
-            //Convertimos la fecha en formato fecha para JS
-            let fecha = new Date(data[0].fecha)
-            //El metodo .toLocaleDateString() sirve para mostrar solo el dia, mes y año
-            datosAMostrar.textContent = fecha.toLocaleDateString() + ': temperatura= '+data[0].temperatura + '° humedad= ' + data[0].humedad + '%'
-        })
-                .catch(error => console.error('Error al obtener la última medición:', error));
+fetch('https://huerta-api.onrender.com/api/ultimaMedicion')
+.then(response => response.json())
+.then(data => {
+    //Convertimos la fecha en formato fecha para JS
+    let fecha = new Date(data[0].fecha)
+    //El metodo .toLocaleDateString() sirve para mostrar solo el dia, mes y año
+    datosAMostrar.textContent = fecha.toLocaleDateString() + ': temperatura= '+data[0].temperatura + '° humedad= ' + data[0].humedad + '%'
+})
+.catch(error => console.error('Error al obtener la última medición:', error));
                         </code></pre>
                         <!-- <button class="btn btn-success" onclick="runCode('document.getElementById(\'tituloTemp\').innerText = \'40°\';')">Ejecutar</button>-->
                     </div>
                     <div id="example3" class="code-container mt-4">
                         <pre><code class="language-javascript"> 
-        fetch('http://localhost:3000/promediosemanal')
-        .then(response => response.json())
-        //Recibimos la respuesta de la API de tipo jSON y la guardamos en data
-        .then(data => {
-            //Creamos una variable para mostrar correctamente la fecha
-            let fecha         
-            /*
-                Utilizamos foreach para recorrer la variable data, ahora utilizaremos
-                item para acceder a las diferentes partes del mismo. 
-                Ej: para la fecha seria item.fecha
-            */
-            data.forEach(item => {
-                fecha = new Date(item.fecha)
-                //El metodo .toLocaleDateString() sirve para mostrar solo el dia, mes y año   
-                datosAMostrar.innerHTML = datosAMostrar.innerHTML + fecha.toLocaleDateString() + ': temperatura= '+item.promedio_temperatura + 'º' + '<br>'
-            });
-        })</code></pre>
+fetch('http://localhost:3000/promediosemanal')
+.then(response => response.json())
+//Recibimos la respuesta de la API de tipo jSON y la guardamos en data
+.then(data => {
+    //Creamos una variable para mostrar correctamente la fecha
+    let fecha         
+    /*
+        Utilizamos foreach para recorrer la variable data, ahora utilizaremos
+        item para acceder a las diferentes partes del mismo. 
+        Ej: para la fecha seria item.fecha
+    */
+    data.forEach(item => {
+        fecha = new Date(item.fecha)
+        //El metodo .toLocaleDateString() sirve para mostrar solo el dia, mes y año   
+        datosAMostrar.innerHTML = datosAMostrar.innerHTML + fecha.toLocaleDateString() + ': temperatura= '+item.promedio_temperatura.toFixed(1) + 'º' + '<br>'
+        //.toFixed(1) reduce la cantidad de decimales a mostrar, en este caso muestra 1 decimal
+    });
+})
+                        </code></pre>
                         <!--  <button class="btn btn-success" onclick="runCode('let nombre = \'pepe\'; ')">Ejecutar</button>-->
                     </div>
                 </div>
