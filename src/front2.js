@@ -11,21 +11,6 @@ setInterval(() => {
         })
         .catch(error => console.error('Error al obtener la última temperatura:', error));
 
-    fetch('https://huerta-api.onrender.com/api/ultimaMedicion')
-        .then(response => response.json())
-        .then(data => {
-            //Convertimos la fecha en formato fecha para JS
-            let fecha = new Date(data[0].fecha)
-
-            if(data[0].temperatura > 50){
-                console.log('te estas quemando')
-            }else{
-                console.log('No te estas quemando')
-            }
-            //El metodo .toLocaleDateString() sirve para mostrar solo el dia, mes y año
-            console.log( fecha.toLocaleDateString() + ': temperatura= '+data[0].temperatura + '° humedad= ' + data[0].humedad + '%')
-        })
-        .catch(error => console.error('Error al obtener la última temperatura:', error));
 }, 1000);
 
 let boton = document.querySelector('button')
@@ -34,7 +19,7 @@ let tituloEjemplo = document.querySelector('#tituloEjemplo')
 let datosAMostrar = document.querySelector('#datos')
 
 boton.onclick = function(){
-    fetch('http://localhost:3000/promediosemanal')
+    fetch('https://huerta-api.onrender.com/api/promediosemanal')
         .then(response => response.json())
         .then(data => {
             //Convertimos la fecha en formato fecha para JS
@@ -69,7 +54,7 @@ function showExample(number) {
         .catch(error => console.error('Error al obtener la última medición:', error));
     }else if(number==3){
         tituloEjemplo.textContent = '¿Cómo mostrar la temperatura y humedad?'  
-        fetch('http://localhost:3000/api/promedioSemanal')
+        fetch('https://huerta-api.onrender.com/api/promedioSemanal')
         .then(response => response.json())
         //Recibimos la respuesta de la API de tipo jSON y la guardamos en data
         .then(data => {
