@@ -95,10 +95,15 @@ app.get('/api/ultimaMedicion', (req, res) => {
     });
 });
 
+/*
+    Rutas grupo Benja
+    
+*/
+
 /* 
     Rutas grupo vicky
 */
-// Nueva ruta para insertar datos en la tabla "plantas" desde la URL
+// Nueva ruta para insertar 8datos en la tabla "plantas" desde la URL
 app.get('/huerta1/insertarPlanta', (req, res) => {
     const {temperatura, humedad } = req.query;
 
