@@ -48,6 +48,8 @@ app.get('/api/insertarPlanta', (req, res) => {
     });
 });
 
+
+
 // Ruta para obtener el último dato de temperatura
 app.get('/api/ultimaTemperatura', (req, res) => {
     const sql = 'SELECT Temperatura FROM huerta ORDER BY id DESC LIMIT 1';
@@ -92,6 +94,40 @@ app.get('/api/ultimaMedicion', (req, res) => {
         res.json(results);  // Enviar los datos en formato JSON
     });
 });
+
+/* 
+    Rutas grupo vicky
+*/
+// Nueva ruta para insertar datos en la tabla "plantas" desde la URL
+app.get('/huerta1/insertarPlanta', (req, res) => {
+    const {temperatura, humedad } = req.query;
+
+    // Generar fecha y hora actuales en el servidor
+    const fecha = new Date().toISOString().split('T')[0]; // Obtiene la fecha en formato YYYY-MM-DD
+    const hora = new Date().toTimeString().split(' ')[0]; // Obtiene la hora en formato HH:MM:SS
+
+    // Consulta SQL para insertar los datos en la tabla plantas
+    const sql = `INSERT INTO plantas (fecha, hora, temperatura, humedad) VALUES (?, ?, ?, ?)`;
+    db.query(sql, [fecha, hora, parseFloat(temperatura), parseFloat(humedad)], (err, result) => {
+        if (err) {
+            console.error(err);
+            res.status(500).send('Error al insertar los datos');
+        } else {
+            res.send('Datos insertados correctamente');
+        }
+    });
+});
+
+// Ruta para obtener el último dato de temperatura
+app.get('/huerta1/ultimosDatos', (req, res) => {
+    const sql = 'SELECT * FROM plantas ORDER BY idPlanta DESC LIMIT 1';
+
+    db.query(sql, (err, results) => {
+        if (err) throw err;
+        res.json(results);  // Enviar los datos en formato JSON
+    });
+});
+
 
 // Iniciar el servidor en el puerto 3000
 
